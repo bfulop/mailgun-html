@@ -1,0 +1,21 @@
+{
+  "name": "mailgun-sendhtml",
+  "version": "0.0.1",
+  "description": "Send html emails with mailgun",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "email"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://bfulop@github.com/bfulop/mailgun-html.git"
+  },
+  "author": "Balint Fulop <bfulop@mac.com> (http://abundancia.io/)",
+  "license": "MIT",
+  "dependencies": {
+    "mailgun-es6": "^1.1.4"
+  }
+}

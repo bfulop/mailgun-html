@@ -1,0 +1,10 @@
+{
+  "libs": ["ecmascript", "chai"],
+  "loadEagerly": ["src/*.js"],
+  "plugins": {
+    "node": {},
+    "modules": {
+      "load": "^(.{1,2}/)+"
+    }
+  }
+}
