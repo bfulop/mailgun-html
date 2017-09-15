@@ -16,6 +16,14 @@
   "author": "Balint Fulop <bfulop@mac.com> (http://abundancia.io/)",
   "license": "MIT",
   "dependencies": {
+    "data.task": "^3.1.1",
+    "immutable": "^3.8.1",
+    "immutable-ext": "^1.1.2",
     "mailgun-es6": "^1.1.4"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^3.5.3",
+    "testdouble": "^3.2.5"
   }
 }

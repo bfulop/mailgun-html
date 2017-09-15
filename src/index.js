@@ -1,8 +1,12 @@
-var MailGun = require('mailgun-es6')
-var mailGun = new MailGun()
+const { getConfig } = require('./getConfig')
+const { sendMail } = require('./utils/sendMail')
+const { List } = require('immutable-ext')
+const Task = require('data.task')
 
-var html = require('./html')
+const send = getConfig
+  .map(({ mailgun, emails }) => emails.map(r => Object.assign({}, {html: r})))
+  .map(List)
+  .chain(xs => xs.traverse(Task.of, sendMail))
+  .map(xs => xs.fold([]))
 
-var mymail = mailGun.sendEmail()
-
-mymail.then(console.log, console.log)
+module.exports = { send }
