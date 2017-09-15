@@ -4,13 +4,14 @@ const { List } = require('immutable-ext')
 const Task = require('data.task')
 const { readFile } = require('./utils/fs')
 
-const processConfig = ({ mailgun, emails }) =>
-  emails.paths.map(r => Object.assign({}, mailgun, {hats: 'shirts'}, { html: readFile(r) }))
+const processConfig = conf =>
+  List(conf.paths).traverse(Task.of, fn =>
+    readFile(fn).map(r => Object.assign({}, { html: r }))
+  )
 
 const send = getConfig
-  .map(processConfig)
-  .map(List)
-  .chain(xs => xs.traverse(Task.of, sendMail))
+  .chain(processConfig)
+  .chain(xs => xs.traverse(Task.of, fn => sendMail(fn)))
   .map(xs => xs.fold([]))
 
 module.exports = { send }

@@ -20,34 +20,16 @@ describe('index', function () {
     )
 
     const fs = td.replace('./utils/fs')
-    td.when(fs.readFile('shoes')).thenReturn('shoeshtml')
-    td.when(fs.readFile('shorts')).thenReturn('shortshtml')
+    td.when(fs.readFile('shorts')).thenReturn(Task.of('shortshtml'))
+    td.when(fs.readFile('shoes')).thenReturn(Task.of('shoeshtml'))
 
     const sendMail = td.replace('./utils/sendMail')
     td
-      .when(
-        sendMail.sendMail(
-          Object.assign(
-            {},
-            mailgunconf,
-            { hats: 'shirts' },
-            { html: 'shoeshtml' }
-          )
-        )
-      )
-      .thenReturn(Task.of('shoes mail sent'))
-    td
-      .when(
-        sendMail.sendMail(
-          Object.assign(
-            {},
-            mailgunconf,
-            { hats: 'shirts' },
-            { html: 'shortshtml' }
-          )
-        )
-      )
+      .when(sendMail.sendMail(td.matchers.contains({ html: 'shortshtml' })))
       .thenReturn(Task.of('shorts mail sent'))
+    td
+      .when(sendMail.sendMail(td.matchers.contains({ html: 'shoeshtml' })))
+      .thenReturn(Task.of('shoes mail sent'))
 
     subject = require('./index')
   })
