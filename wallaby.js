@@ -1,6 +1,7 @@
 module.exports = function (wallaby) {
   return {
     files: [
+      'src/getConfig.js',
       'src/*.js',
       { pattern: 'src/*.test.js', ignore: true },
       {

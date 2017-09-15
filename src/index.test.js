@@ -3,23 +3,60 @@ const Task = require('data.task')
 
 describe('index', function () {
   var subject
+
+  afterEach(function () {
+    td.reset()
+  })
+
   before('set up stubs', function () {
     const mailgunconf = { pants: 'pants' }
-    const emails = { emails: ['shoes', 'shorts'] }
+    const emails = {
+      hats: 'shirts',
+      paths: ['shoes', 'shorts']
+    }
     const getConfig = td.replace('./getConfig')
-    getConfig.getConfig = Task.of(Object.assign({}, {mailgun: mailgunconf}, emails))
+    getConfig.getConfig = Task.of(
+      Object.assign({}, { mailgun: mailgunconf }, emails)
+    )
+
+    const fs = td.replace('./utils/fs')
+    td.when(fs.readFile('shoes')).thenReturn('shoeshtml')
+    td.when(fs.readFile('shorts')).thenReturn('shortshtml')
 
     const sendMail = td.replace('./utils/sendMail')
-
-    td.when(sendMail.sendMail(Object.assign({}, mailgunconf, {html: 'shoes'}))).thenReturn(Task.of('shoes mail sent'))
-    td.when(sendMail.sendMail(Object.assign({}, mailgunconf, {html: 'shorts'}))).thenReturn(Task.of('shorts mail sent'))
+    td
+      .when(
+        sendMail.sendMail(
+          Object.assign(
+            {},
+            mailgunconf,
+            { hats: 'shirts' },
+            { html: 'shoeshtml' }
+          )
+        )
+      )
+      .thenReturn(Task.of('shoes mail sent'))
+    td
+      .when(
+        sendMail.sendMail(
+          Object.assign(
+            {},
+            mailgunconf,
+            { hats: 'shirts' },
+            { html: 'shortshtml' }
+          )
+        )
+      )
+      .thenReturn(Task.of('shorts mail sent'))
 
     subject = require('./index')
   })
 
   describe('sends email', function () {
     it('forwards info to sendMail', function () {
-      subject.send.fork(console.error, t => expect(t).to.eql(['shoes mail sent', 'shorts mail sent']))
+      subject.send.fork(console.error, t =>
+        expect(t).to.eql(['shoes mail sent', 'shorts mail sent'])
+      )
     })
   })
 })

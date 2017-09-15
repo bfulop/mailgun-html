@@ -30,6 +30,6 @@ This file stores the path to you html emails and sender/recipient data.
 {
   "to": ["to@example.com"],
   "from": "from@example.com",
-  "path": ["path to html file"]
+  "paths": ["path to html file"]
 }
 ```
