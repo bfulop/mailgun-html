@@ -6,7 +6,7 @@ const { readFile } = require('./utils/fs')
 
 const processConfig = conf =>
   List(conf.paths).traverse(Task.of, fn =>
-    readFile(fn).map(r => Object.assign({}, { html: r }))
+    readFile(fn).map(r => Object.assign({}, { html: r }, conf))
   )
 
 const send = getConfig

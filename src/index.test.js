@@ -9,7 +9,7 @@ describe('index', function () {
   })
 
   before('set up stubs', function () {
-    const mailgunconf = { pants: 'pants' }
+    const mailgunconf = 'pants'
     const emails = {
       hats: 'shirts',
       paths: ['shoes', 'shorts']
@@ -25,10 +25,10 @@ describe('index', function () {
 
     const sendMail = td.replace('./utils/sendMail')
     td
-      .when(sendMail.sendMail(td.matchers.contains({ html: 'shortshtml' })))
+      .when(sendMail.sendMail(td.matchers.contains({ mailgun: mailgunconf, hats: 'shirts', html: 'shortshtml' })))
       .thenReturn(Task.of('shorts mail sent'))
     td
-      .when(sendMail.sendMail(td.matchers.contains({ html: 'shoeshtml' })))
+      .when(sendMail.sendMail(td.matchers.contains({ mailgun: mailgunconf, hats: 'shirts', html: 'shoeshtml' })))
       .thenReturn(Task.of('shoes mail sent'))
 
     subject = require('./index')
