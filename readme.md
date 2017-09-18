@@ -1,3 +1,5 @@
+<img src="https://travis-ci.org/bfulop/mailgun-html.svg?branch=master" alt="build:passed"/>
+
 #Send emails with mailgun
 
 A simple repo to simplify sending test emails with a Mailgun account.
