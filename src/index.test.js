@@ -16,7 +16,7 @@ describe('index', function () {
     }
     const getConfig = td.replace('./getConfig')
     getConfig.getConfig = Task.of(
-      Object.assign({}, { mailgun: mailgunconf }, emails)
+      Object.assign({}, { mailgun: mailgunconf }, { emails: emails })
     )
 
     const fs = td.replace('./utils/fs')
@@ -24,11 +24,13 @@ describe('index', function () {
     td.when(fs.readFile('shoes')).thenReturn(Task.of('shoeshtml'))
 
     const sendMail = td.replace('./utils/sendMail')
+    td.when(sendMail.setupGun({ mailgun: mailgunconf })).thenReturn('mygun')
+
     td
-      .when(sendMail.sendMail(td.matchers.contains({ mailgun: mailgunconf, hats: 'shirts', html: 'shortshtml' })))
+      .when(sendMail.sendMail('mygun',td.matchers.contains( { hats: 'shirts', html: 'shortshtml' })))
       .thenReturn(Task.of('shorts mail sent'))
     td
-      .when(sendMail.sendMail(td.matchers.contains({ mailgun: mailgunconf, hats: 'shirts', html: 'shoeshtml' })))
+      .when(sendMail.sendMail('mygun',td.matchers.contains( { hats: 'shirts', html: 'shoeshtml' })))
       .thenReturn(Task.of('shoes mail sent'))
 
     subject = require('./index')

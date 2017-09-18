@@ -1,6 +1,6 @@
 {
   "name": "mailgun-sendhtml",
-  "version": "0.0.1",
+  "version": "0.9.0",
   "description": "Send html emails with mailgun",
   "main": "./src/index.js",
   "scripts": {

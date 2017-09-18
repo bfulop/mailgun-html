@@ -11,8 +11,8 @@ describe('getConfig', function () {
     const fs = td.replace('./utils/fs')
     const mailgunsecret = {pants: 'olive'}
     const mailgunconf = {shorts: 'orange'}
-    td.when(fs.readFile('~/.mailgun')).thenReturn(Task.of(JSON.stringify(mailgunsecret)))
-    td.when(fs.readFile('./mailgunrc.json')).thenReturn(Task.of(JSON.stringify(mailgunconf)))
+    td.when(fs.readFile(td.matchers.contains('/.mailgun'))).thenReturn(Task.of(JSON.stringify(mailgunsecret)))
+    td.when(fs.readFile('../mailgunrc.json')).thenReturn(Task.of(JSON.stringify(mailgunconf)))
 
     subject = require('./getConfig')
   })
