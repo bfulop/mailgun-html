@@ -1,14 +1,14 @@
 <img src="https://travis-ci.org/bfulop/mailgun-html.svg?branch=master" alt="build:passed"/>
 
-#Send emails with mailgun
+# Send emails with mailgun
 
 A simple repo to simplify sending test emails with a Mailgun account.
 
-###Setup
+### Setup
 
 The library needs two config files to run:
 
-####Mailgun credentials
+#### Mailgun credentials
 
 This JSON file is stored globally in your home directory so that all new projects have access to it. Save this to 
 
@@ -22,7 +22,7 @@ This JSON file is stored globally in your home directory so that all new project
 }
 ```
 
-####Config file
+#### Config file
 
 This file stores the path to you html emails and sender/recipient data.
 
