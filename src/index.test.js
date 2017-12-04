@@ -15,9 +15,10 @@ describe('index', function () {
       paths: ['shoes', 'shorts']
     }
     const getConfig = td.replace('./getConfig')
-    getConfig.getConfig = Task.of(
-      Object.assign({}, { mailgun: mailgunconf }, { emails: emails })
+    td.when(getConfig.getConfig('pants')).thenReturn(Task.of(
+      Object.assign({}, { mailgun: mailgunconf }, { emails: emails }))
     )
+
 
     const fs = td.replace('./utils/fs')
     td.when(fs.readFile('shorts')).thenReturn(Task.of('shortshtml'))
@@ -38,7 +39,7 @@ describe('index', function () {
 
   describe('sends email', function () {
     it('forwards info to sendMail', function () {
-      subject.send.fork(console.error, t =>
+      subject.send('pants').fork(console.error, t =>
         expect(t).to.eql(['shoes mail sent', 'shorts mail sent'])
       )
     })

@@ -2,10 +2,10 @@ const { readFile } = require('./utils/fs')
 const Task = require('data.task')
 const homedir = require('os').homedir()
 
-const getConfig = Task.of(x => y =>
-  Object.assign({}, { mailgun: JSON.parse(x) }, { emails: JSON.parse(y) })
+const getConfig = conf => Task.of(x => y =>
+  Object.assign({}, { mailgun: JSON.parse(x) }, { emails: y })
 )
   .ap(readFile(`${homedir}/.mailgun`))
-  .ap(readFile('../mailgunrc.json'))
+  .ap(Task.of(conf))
 
 module.exports = { getConfig }

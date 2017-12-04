@@ -2,7 +2,7 @@
   "name": "mailgun-sendhtml",
   "version": "0.9.0",
   "description": "Send html emails with mailgun",
-  "main": "./src/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "mocha"
   },

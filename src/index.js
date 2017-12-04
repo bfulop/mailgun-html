@@ -11,12 +11,12 @@ const processConfig = conf =>
 
 const configMailgun = conf => setupGun(conf)
 
-const send = getConfig
+const send = conf => getConfig(conf)
   .map(r => Object.assign(r, { gun: configMailgun({mailgun: r.mailgun}) }))
   .chain(processConfig)
   .chain(xs => xs.traverse(Task.of, fn => sendMail(fn.gun, fn)))
   .map(xs => xs.fold([]))
 
-send.fork(console.error, console.log)
+// send.fork(console.error, console.log)
 
 module.exports = { send }
