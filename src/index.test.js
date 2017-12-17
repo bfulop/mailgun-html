@@ -15,13 +15,6 @@ describe('index', function () {
       paths: ['shoes', 'shorts']
     }
     const getConfig = td.replace('./getConfig')
-    td.when(getConfig.getConfig('pants')).thenReturn(Task.of(
-      Object.assign({}, { mailgun: mailgunconf }, { emails: emails }))
-    )
-
-
-    const fs = td.replace('./utils/fs')
-    td.when(fs.readFile('shorts')).thenReturn(Task.of('shortshtml'))
     td.when(fs.readFile('shoes')).thenReturn(Task.of('shoeshtml'))
 
     const sendMail = td.replace('./utils/sendMail')
